@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Create New Post</title>
+
+    <style type="text/css">
+        .author-col {
+            min-width: 12em;
+        }
+        
+        .post-col{
+            min-width: 20em;
+        }
+    </style>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+
+<body>
+
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+        <h1><a href="0" class="navbar-brand">Forum</a></h1>
+        <form class="form-inline">
+            <input type="text" class="form-control mr-3 mb-2 mb-sm-0" placeholder="Search">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+    </nav>
+    <div class="container my-3">
+    <nav class="breadcrumb">
+        <div class="container mt-4">
+        <a href="index.html" class="breadcrumb-item">Board Index</a>
+        <a href="overview-forum-category.html" class="breadcrumb-item">Forum Category</a>
+        <a href="overview-topics.html" class="breadcrumb-item">Forum Name</a>
+        <span class="breadcrumb-item active">Create New Post</span>
+        </div>
+    </nav>
+    <div class="row">
+        <div class="col-12">
+    <h2 class="h4 text-white bg-info mb-3 p-4 rounded">Create New Post</h2>
+    
+  </div>
+ </div>
+
+<form class="mb-3">
+    <div class="form-group">
+        <label for="topic">Post</label>
+        <input type="text" class="form-control" id="Post" placeholder="Give your post a title" required>
+    </div>
+    <div class="form-group mr-2">
+        <label for="select-category">Choose Post Category</label>
+        <select class="form-control form-control-sm" id="select-category">
+            <option value="Interview Help" >Interview Help</option>
+            <option value="Question" selected>Question</option>
+            <option value="Discussion" selected>Discussion</option>
+        </select>
+    </div>
+<div class="form-group">
+    <label for="content">Post description</label>
+    <textarea class="form-control" id="comment" rows="10" placeholder="Write your comment here."></textarea>
+</div>
+<div class="form-check">
+    <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" id="checkbox" value="notification"> Notify me upon replies
+    </label>
+</div>
+<button type="submit" class="btn btn-primary">Create Post</button>
+<button type="reset" class="btn btn-danger">Reset</button>
+</form>
+  </div>
+ <footer class="small bg-dark text-white">
+    <div class="container"></div>
+    <ul class="list-inline">
+        <li class="list-inline-item">&copy; 2023 Woodward Beyond</li>
+        <li class="list-inline-item">All rights reserved.</li>
+        <li class="list-inline-item"><a href="#0">Terms of use and privacy policy</a>.</li>
+    </ul>
+</div>
+</footer>
+    
+
+</body>
+
+</html>
