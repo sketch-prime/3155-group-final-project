@@ -13,6 +13,11 @@ def index():
     s=False
     return render_template('index.html')
 
+@app.route('/')
+def root():
+    global s
+    s=False
+    return render_template('index.html')
 
 
 @app.route('/login.html')
@@ -26,11 +31,33 @@ def login():
 
 @app.route('/login.html', methods=['POST'])
 def loginpost():
-    username = request.form['username']
+    username = request.form['username'] 
     processed_username = username.upper()
     print(processed_username, file=sys.stderr)
     return login()
         
+@app.route('/profile.html')
+def profile():
+    return render_template('profile.html')
+
+
+@app.route('/overview-topics.html')
+def overviewtopics():
+    return render_template('overview-topics.html')
+
+
+@app.route('/new-post.html')
+def newpost():
+    return render_template('new-post.html')
+
+
+@app.route('/overview-forum-category.html')
+def overviewforumcategory():
+    return render_template('overview-forum-category.html')
+
+@app.route('/post.html')
+def post():
+    return render_template('post.html')
 
 @app.route('/sign-up.html')
 def signup():
