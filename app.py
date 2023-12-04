@@ -1,6 +1,6 @@
 import sqlite3
 import sys
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 
 s=False
 currentuserid=-1
@@ -19,28 +19,7 @@ def root():
     s=False
     return render_template('index.html')
 
-
-@app.route('/login.html')
-def login():
-    global s
-    if s:
-        s=False
-        return render_template('login.html', signedup=True)
-    return render_template('login.html', signedup=False)
-
-
-@app.route('/login.html', methods=['POST'])
-def loginpost():
-    username = request.form['username'] 
-    processed_username = username.upper()
-    print(processed_username, file=sys.stderr)
-    return login()
-        
-@app.route('/profile.html')
-def profile():
-    return render_template('profile.html')
-
-
+ 
 @app.route('/overview-topics.html')
 def overviewtopics():
     return render_template('overview-topics.html')
@@ -86,6 +65,47 @@ def get_db_connection():
     conn = sqlite3.connect('database/wb.db')
     conn.row_factory = sqlite3.Row
     return conn
+
+
+@app.route('/login.html')
+def login():
+    global s
+    if s:
+        s = False
+        return render_template('login.html', signedup=True)
+    return render_template('login.html', signedup=False)
+
+@app.route('/login.html', methods=['POST'])
+def loginpost():
+    username = request.form['username']
+    processed_username = username.upper()
+    password = request.form['password']
+
+    con = get_db_connection()
+    user = con.execute("SELECT * FROM users WHERE username = ? AND password = ?", (processed_username, password)).fetchone()
+    con.close()
+
+    if user:
+        global s, current_user_id
+        s = True
+        current_user_id = user['id']
+        return redirect(url_for('profile'))
+    else:
+        return render_template('login.html', signedup=False, login_failed=True)
+
+
+@app.route('/profile.html')
+def profile():
+    user_id = current_user_id  # Use the global current_user_id variable
+
+    if user_id != -1:
+        con = get_db_connection()
+        user = con.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
+        con.close()
+
+        return render_template('profile.html', user=user)
+    else:
+        return redirect(url_for('login'))
 
 
 if __name__ == '__main__':
