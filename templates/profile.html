@@ -23,11 +23,11 @@
                     <tbody>
                         <tr>
                             <td class="author-col">
-                                <div>Username: JohnDoe</div>
+                                <div>Username: {{ user.username }}</div>
                             </td>
                             <td class="post-col d-lg-flex justify-content-lg-between">
-                                <div><span class="font-weight-bold">Joined:</span> 03 Nov 2023, 4:36 PM</div>
-                                <div><span class="font-weight-bold">Posts:</span> 88</div>
+                                <div><span class="font-weight-bold">Joined:</span> {{user.date}}</div>
+                                <div><span class="font-weight-bold">Posts:</span> 0</div>
                             </td>
                         </tr>
                         <tr>
@@ -58,5 +58,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
+
 
 </html>
