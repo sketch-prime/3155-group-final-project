@@ -86,9 +86,9 @@ def loginpost():
     con.close()
 
     if user:
-        global s, current_user_id
+        global s, currentuserid
         s = True
-        current_user_id = user['id']
+        currentuserid = user['id']
         return redirect(url_for('profile'))
     else:
         return render_template('login.html', signedup=False, login_failed=True)
@@ -96,7 +96,7 @@ def loginpost():
 
 @app.route('/profile.html')
 def profile():
-    user_id = current_user_id  # Use the global current_user_id variable
+    user_id = currentuserid  # Use the global current_user_id variable
 
     if user_id != -1:
         con = get_db_connection()
@@ -105,7 +105,7 @@ def profile():
 
         return render_template('profile.html', user=user)
     else:
-        return redirect(url_for('login'))
+        return redirect(url_for('login'))  # Corrected redirect here
 
 
 if __name__ == '__main__':
