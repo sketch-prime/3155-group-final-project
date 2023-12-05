@@ -1,6 +1,7 @@
 import sqlite3
 import sys
 from flask import Flask, render_template, request, redirect, url_for
+from datetime import datetime as dt
 
 s=False
 currentuserid=-1
@@ -48,13 +49,15 @@ def signuppost():
     username = request.form['username']
     processed_username = username.upper()
     password = request.form['password']
+    date = dt.today()
+    print(date)
 #validate that user does not exist
     
     con = get_db_connection()
     users=con.execute("SELECT * FROM users").fetchall()
     id=len(users)
     
-    con.execute(f"INSERT INTO users VALUES ({id}, '{processed_username}', '{password}')")
+    con.execute(f"INSERT INTO users VALUES ({id}, '{processed_username}', '{password}', '{date}')")
     con.commit()
     con.close()
     s=True
@@ -101,13 +104,13 @@ def profile():
     if user_id != -1:
         con = get_db_connection()
         user = con.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
+        date = con.execute("SELECT * FROM users WHERE date = ?", (user_id,)).fetchone()
         con.close()
 
-        return render_template('profile.html', user=user)
+        return render_template('profile.html', user=user, date=date)
     else:
         return redirect(url_for('login'))  # Corrected redirect here
 
 
 if __name__ == '__main__':
     app.run(debug=True)
-
