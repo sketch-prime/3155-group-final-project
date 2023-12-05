@@ -8,6 +8,26 @@ currentuserid=-1
 
 app = Flask(__name__)
 
+def get_db_connection():
+    conn = sqlite3.connect('database/wb.db')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def create_table():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS posts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            content TEXT NOT NULL
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+create_table()
+
 @app.route('/index.html')
 def index():
     global s
@@ -26,8 +46,23 @@ def overviewtopics():
     return render_template('overview-topics.html')
 
 
-@app.route('/new-post.html')
-def newpost():
+@app.route('/new-post.html', methods=['GET', 'POST'])
+def create_post():
+    if request.method == 'POST':
+        print(f"Form Data: {request.form}")
+        title = request.form['title']
+        content = request.form['content']
+
+        print(title)
+        print(content)
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO posts (title, content) VALUES (?, ?)", (title, content))
+        conn.commit()
+        conn.close()
+
+
     return render_template('new-post.html')
 
 
@@ -62,12 +97,7 @@ def signuppost():
     con.close()
     s=True
     return login()
-    
 
-def get_db_connection():
-    conn = sqlite3.connect('database/wb.db')
-    conn.row_factory = sqlite3.Row
-    return conn
 
 
 @app.route('/login.html')
