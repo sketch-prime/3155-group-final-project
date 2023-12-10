@@ -12,9 +12,63 @@
 
 <body>
 
+
     {% include 'header.html'%}
+    <section class="background-section">
+        
+        <br>
+        <!-- Floating on Left will be Image -->
+        <div class="p-row">
+            <div class="columnCenterL"> <!-- Main Image -->
+                <div class="cardalt">
+                    <img src="{{img}}" style="width:150px;height:150px;">
+                </div>
+                <br>
+                <br>
+                <div class="cardalt">
+                    <form action="{{ url_for('upload_file') }}" enctype="multipart/form-data" method="POST">
+                        <input name="img" type="file"/>
+                        <input type="submit" value ="Upload">
+                    </form>  
+                </div>
+            </div>
+            
+            <div class="columnCenterR "> 
+                <div class="p-row">
+                    <div class="cardalt">
+                        <h2 class="message-h2"> Username: {{ user.username }}</h2>
+                    </div>
+                    <br>
+                    <div class="cardalt">
+                        <p class="message-paragraph" style="font-size: 104%;">
+                            User description or other information can be added here.
+                        </p>
+                    </div>
+                    <div class="p-row" style="padding-top: 2%;">
+                        <div class="columnCenterR">
+                            <div class="cardalt" style="font-size: 100%;" id="date">
+                                <span class="font-weight-bold">Joined:</span> {{user.date}}
+                            </div>
+                        </div>
+                        <div class="columnCenterR">
+                            <div class="cardalt" style="font-size: 100%;" id="post">
+                                <span class="font-weight-bold">Posts:</span> 0
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+
+
+<!--
+    <section>
     <div class="container my-3">
-        <div class="row">
+        <div class="p-row">
             <div class="col-12">
                 <h2 class="h4 text-white bg-info mb-0 p-4 rounded-top">User Profile</h2>
                 <div class="text-center mb-4">
@@ -32,7 +86,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <img src="{{img}}" style="width:128px;height:128px;">
+                                <img src="user-icon.png" alt="Profile Picture" class="img-fluid rounded-circle" style="max-width: 150px;">
                             </td>
                             <td>
                                 <p>User description or other information can be added here.</p>
@@ -40,22 +94,14 @@
                         </tr>
                     </tbody>
                 </table>
-                <form action="{{ url_for('upload_file') }}" enctype="multipart/form-data" method="POST">
-                    <input name="img" type="file"/>
-                    <input type="submit"/>
-                </form>
-
+                <form action = "/success" method = "post" enctype="multipart/form-data">   
+        <input type="file" name="file" />   
+        <input type = "submit" value="Upload">   
     </form>   
-
-    {% if session.user_id is defined %}
-    <form action="{{ url_for('logout') }}" method="get">
-        <button type="submit" class="btn btn-danger">Logout</button>
-    </form>
-{% endif %}
-
             </div>
         </div>
     </div>
+    </section>  -->
 
     <footer class="small bg-dark text-white">
         <div class="container">
