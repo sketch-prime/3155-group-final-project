@@ -10,8 +10,7 @@ current_user_id = -1
 app = Flask(__name__)
 secret_key = secrets.token_urlsafe(32)
 app.secret_key = secret_key 
-secret_key = secrets.token_urlsafe(32)
-app.secret_key = secret_key 
+
 
 def get_db_connection():
     conn = sqlite3.connect('database/wb.db')
@@ -55,9 +54,18 @@ def get_posts():
 
 @app.route('/index.html')
 def index():
+    conn=get_db_connection()
+    cursor=conn.cursor()
+    totalusers=len(cursor.execute('SELECT * FROM users').fetchall())
+
     session['signed_up'] = False
     posts = get_posts()
-    return render_template('index.html', items=posts)
+    u=''
+    if 'username' in session.keys():
+        u=session['username']
+        print("anything")
+    return render_template('index.html', items=posts, username=u, totalusers=totalusers)
+
 
 @app.route('/')
 def root():
@@ -96,10 +104,6 @@ def overviewforumcategory():
     return render_template('overview-forum-category.html')
 
 
-@app.route('/post.html')
-def post():
-    return render_template('post.html')
-
 @app.route('/sign-up.html')
 def signup():
     return render_template('sign-up.html')
@@ -117,7 +121,7 @@ def signuppost():
     users = con.execute("SELECT * FROM users").fetchall()
     current_user_id = len(users)
 
-    con.execute(f"INSERT INTO users VALUES ({current_user_id}, '{processed_username}', '{password}', '{date}')")
+    con.execute(f"INSERT INTO users VALUES ({current_user_id}, '{processed_username}', '{password}', '{date}', '') ")
     con.commit()
     con.close()
 
@@ -131,6 +135,7 @@ def signuppost():
 def login():
     if session.get('signed_up', False):
         session['signed_up'] = False
+        print("anything")
         return render_template('login.html', signedup=True)
     return render_template('login.html', signedup=False)
 
@@ -152,7 +157,7 @@ def loginpost():
         # Set the user ID in the session upon successful login
         session['user_id'] = current_user_id
         session['signed_up'] = True
-
+        session['username'] = username
         return redirect(url_for('profile'))
     else:
         session['signed_up'] = False
@@ -162,6 +167,7 @@ def loginpost():
 def logout():
     # Remove the user ID from the session upon logout
     session.pop('user_id', None)
+    session.pop('username', None)
     return redirect(url_for('login'))
 
 @app.route('/profile.html')
@@ -213,6 +219,18 @@ def search():
         return render_template('search_results.html', query=query, results=search_results)
     else:
         return render_template('search_results.html', query=None, results=None)
+
+@app.route('/post.html/<int:pid>')
+def post(pid=None):
+    conn = get_db_connection()
+    cursor=conn.cursor()
+    post = cursor.execute(f"SELECT * FROM posts WHERE id={pid}").fetchone()
+    conn.commit()
+    return render_template('post.html', post=post)
+
+pid = '/pid'
+app.add_url_rule(pid, 'post', post)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
