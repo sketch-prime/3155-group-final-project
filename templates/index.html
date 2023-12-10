@@ -63,7 +63,7 @@
                 {% if post['category'] == 'Discussion' %}
                     <tr>
                         <td>
-                            <h3 class="h5"><a href="#0">Forum Name</a></h3>
+                            <h3 class="h5"><a href="{{ url_for('view_post', id=post.id) }}">Forum Name</a></h3>
                             <div class="fixed-table-content">
                                 <p>{{ post['content'] }} </p>
                             </div>

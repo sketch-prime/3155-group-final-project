@@ -1,4 +1,6 @@
+import datetime
 import os
+import sqlite3, secrets
 import sqlite3, secrets
 from flask import Flask, render_template, request, redirect, url_for, session
 from distutils.log import debug 
@@ -10,8 +12,7 @@ current_user_id = -1
 app = Flask(__name__)
 secret_key = secrets.token_urlsafe(32)
 app.secret_key = secret_key 
-secret_key = secrets.token_urlsafe(32)
-app.secret_key = secret_key 
+
 
 def get_db_connection():
     conn = sqlite3.connect('database/wb.db')
@@ -29,6 +30,15 @@ def create_table():
             content TEXT NOT NULL,
             category TEXT NOT NULL,
             posted_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (author_id) REFERENCES users(id)
+        )
+    ''')
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS replies (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            author_id INTEGER,
+            content TEXT NOT NULL,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (author_id) REFERENCES users(id)
         )
     ''')
@@ -52,6 +62,22 @@ def get_posts():
 
     conn.close()
     return posts
+
+def get_post(id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Fetch posts from the database
+    cursor.execute('''
+        SELECT posts.id, posts.title, posts.content, posts.category, posts.author_id, users.username
+        FROM posts
+        JOIN users ON posts.author_id = users.id
+        WHERE posts.id = ?
+    ''', (id,))    
+    post = cursor.fetchone()
+
+    conn.close()
+    return post
 
 @app.route('/index.html')
 def index():
@@ -195,6 +221,12 @@ def success():
 
         return render_template("Acknowledgement.html", name = f.filename)   
 
+
+@app.route('/view-post/<int:id>')
+def view_post(id):
+    post = get_post(id)
+    print(id)
+    return render_template('view-post.html', post=post)
 
 
 if __name__ == '__main__':
