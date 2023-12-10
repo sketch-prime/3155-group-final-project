@@ -167,7 +167,7 @@ def signuppost():
     session['user_id'] = current_user_id
     session['signed_up'] = True
 
-    return login()
+    return redirect(url_for('login'))
 
 @app.route('/login.html')
 def login():
@@ -195,7 +195,7 @@ def loginpost():
         session['user_id'] = current_user_id
         session['signed_up'] = True
 
-        return redirect(url_for('profile'))
+        return redirect(url_for('index'))
     else:
         session['signed_up'] = False
         return render_template('login.html', signedup=False, login_failed=True)
