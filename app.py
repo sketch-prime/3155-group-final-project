@@ -131,6 +131,7 @@ def create_post():
 
         conn.commit()
         conn.close()
+        return redirect(url_for('index'))
 
     return render_template('new-post.html')
 
