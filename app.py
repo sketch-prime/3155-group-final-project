@@ -1,4 +1,4 @@
-import sqlite3
+import sqlite3, secrets
 from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import datetime as dt
 from distutils.log import debug 
@@ -8,7 +8,8 @@ import os
 current_user_id = -1
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Set a secret key for the session, replace 'your_secret_key' with a random key
+secret_key = secrets.token_urlsafe(32)
+app.secret_key = secret_key 
 
 def get_db_connection():
     conn = sqlite3.connect('database/wb.db')
@@ -76,6 +77,8 @@ def signup():
 
 @app.route('/sign-up.html', methods=['POST'])
 def signuppost():
+    global current_user_id  # Declare current_user_id as a global variable
+
     username = request.form['username']
     processed_username = username.upper()
     password = request.form['password']
@@ -104,6 +107,8 @@ def login():
 
 @app.route('/login.html', methods=['POST'])
 def loginpost():
+    global current_user_id  # Declare current_user_id as a global variable
+
     username = request.form['username']
     processed_username = username.upper()
     password = request.form['password']
@@ -143,12 +148,22 @@ def profile():
         return render_template('profile.html', user=user, date=date)
     else:
         return redirect(url_for('login'))
+
     
-@app.route('/success', methods = ['POST'])   
+@app.route('/success', methods = ['GET', 'POST'])   
 def success():   
     if request.method == 'POST':   
         f = request.files['file'] 
         f.save(os.path.join(app.instance_path, f.filename))   
+        fpath = "/instance/" + f.filename
+        print(fpath)
+        testuser = 6
+        print(testuser)
+        con = get_db_connection()
+        users = con.execute("SELECT * FROM users").fetchall()
+        con.execute("UPDATE users SET resume = ? WHERE id = ?", (fpath, testuser))
+        con.close()
+
         return render_template("Acknowledgement.html", name = f.filename)   
 
 
