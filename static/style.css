@@ -412,6 +412,10 @@ ww-green {
 }
 
 footer {
+    
+    position: fixed;
+    bottom: 0;
+    width: 100%;
     background-color: #343a40; /* Example background color for the footer */
     color: white; /* Example text color for the footer */
     padding: 2px; /* Adjust padding as needed */
