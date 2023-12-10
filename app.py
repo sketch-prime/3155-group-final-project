@@ -55,7 +55,7 @@ def index():
 def root():
     session['signed_up'] = False
     posts = get_posts()
-    return render_template('index.html', items=posts)
+    return render_template('welcome.html', items=posts)
 
 
 @app.route('/overview-topics.html')
@@ -87,6 +87,7 @@ def create_post():
 @app.route('/overview-forum-category.html')
 def overviewforumcategory():
     return render_template('overview-forum-category.html')
+
 
 @app.route('/post.html')
 def post():
