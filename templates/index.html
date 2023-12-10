@@ -77,8 +77,33 @@
                         </td>
                         <td>
                             <div><span class="font-weight-bold"> Post subject: </span>{{ post['title'] }}</div>
+        <tbody>
+            {% for post in items %}
+                {% if post['category'] == 'Discussion' %}
+                    <tr>
+                        <td>
+                            <h3 class="h5"><a href="#0">Forum Name</a></h3>
+                            <div class="fixed-table-content">
+                                <p>{{ post['content'] }} </p>
+                            </div>
+                        
+                        </td>
+                        <td>
+                            <div>5</div>
+                        </td>
+                        <td>
+                            <div>18</div>
+                        </td>
+                        <td>
+                            <div><span class="font-weight-bold"> Post subject: </span>{{ post['title'] }}</div>
                             <div>by {{ post['username'] }}</div>
                             <div> 13 November 2023, 1:08pm</div>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>                            <div> 13 November 2023, 1:08pm</div>
                         </td>
                     </tr>
                 {% endif %}
@@ -114,7 +139,7 @@
                         </td>
                         <td>
                             <div><span class="font-weight-bold"> Post subject: </span>{{ post['title'] }}</div>
-                            <div>by <a href="#0">{{ post['author_id'] }}</a></div>
+                            <div>by {{ post['username'] }}</div>
                             <div> 13 November 2023, 1:08pm</div>
                         </td>
                     </tr>
@@ -151,7 +176,7 @@
                         </td>
                         <td>
                             <div><span class="font-weight-bold"> Post subject: </span>{{ post['title'] }}</div>
-                            <div>by <a href="#0">{{ post['author_id'] }}</a></div>
+                            <div>by {{ post['username'] }}</div>
                             <div> 13 November 2023, 1:08pm</div>
                         </td>
                     </tr>
