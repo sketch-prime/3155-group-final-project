@@ -86,8 +86,9 @@ def get_replies_for_post(id):
 
     # Fetch replies from the database for a specific post
     cursor.execute('''
-        SELECT replies.content, replies.author_id, replies.timestamp
+        SELECT replies.content, replies.author_id, replies.timestamp, users.username
         FROM replies
+        JOIN users ON replies.author_id = users.id
         WHERE post_id = ?
     ''', (id,))
     

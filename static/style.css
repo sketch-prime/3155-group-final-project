@@ -14,6 +14,17 @@ ww-green {
         box-sizing: border-box;
     }
 
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Ensure the body takes at least the full height of the viewport */
+        margin: 0; /* Remove default body margin */
+    }
+    
+    .container {
+        flex: 1; /* Grow to fill the available space between content and footer */
+    }
+
     html {
         font-size: 75%;
         font-family: 'Roboto', sans-serif;
@@ -399,4 +410,18 @@ ww-green {
     }
   
 }
+
+footer {
+    background-color: #343a40; /* Example background color for the footer */
+    color: white; /* Example text color for the footer */
+    padding: 2px; /* Adjust padding as needed */
+    text-align: center;
+}
+
+body.sticky-footer {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+ }
+ 
   
