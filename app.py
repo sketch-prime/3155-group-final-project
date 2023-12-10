@@ -1,3 +1,4 @@
+import os
 import sqlite3, secrets
 import sqlite3, secrets
 from flask import Flask, render_template, request, redirect, url_for, session
