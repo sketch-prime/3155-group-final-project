@@ -184,3 +184,47 @@ ww-green {
         overflow-y: auto;
         padding: auto; 
       }
+    
+    .abc {
+        width: 100%;
+        height: 100vh;
+        background-image: url(intro.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        display: flex;
+    }
+
+    .centered {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        right: 0;
+        bottom: 0;
+        text-align: center;
+    }
+
+    .title {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 500%;
+        color: white;
+      }
+
+    .title-sub {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 200%;
+        color: white;
+    }
+
+
+    /*#abc {
+        width: 100%;
+        height: 100vh;
+        background-image: url(intro.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        display: flex;
+    }*/
