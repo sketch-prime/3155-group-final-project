@@ -39,8 +39,7 @@
 
 <body>
 
-            {% include 'header.html'%}
-       
+            {% include 'header.html'%}       
     <div class="container my-3 ww-body">
     <nav class="breadcrumb">
         <div class="container mt-4">
@@ -49,7 +48,7 @@
     </nav>
     <div class="row">
         <div class="col-12 col-xl-9">
-    <h2 class="h4 text-white bg-info mb-0 p-4 rounded-top">Forum Category</h2>
+    <h2 class="h4 text-white bg-info mb-0 p-4 rounded-top">Discussions</h2>
     <table class ="table table-striped table-bordered table-fixed">
         <thead class="thead-light">
             <tr>
@@ -60,46 +59,33 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>
-                    <h3 class="h5"><a href="#0">Forum Name</a></h3>
-                    <p> explicabo</p>
-                </td>
-                <td>
-                    <div>5</div>
-                </td>
-                <td>
-                    <div>18</div>
-                </td>
-                <td>
-                    <h4 class="h6"><a href="#0">Post Name</a></h4>
-                    <div>by <a href="#0">Author name</a></div>
-                    <div> 13 November 2023, 1:08pm</div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h3><a href="#0">Forum Name</a></h3>
-                    <p>explicabo</p>
-                </td>
-                <td>
-                    <div>5</div>
-                </td>
-                <td>
-                    <div>18</div>
-                </td>
-                <td>
-                    <h4 class="h6"><a href="#0">Post Name</a></h4>
-                    <div>by <a href="#0">Author name</a></div>
-                    <div> 13 November 2023, 1:08pm</div>
-                </td>
-            </tr>
-            <tr>
-                
-            </tr>
+            {% for post in items %}
+                {% if post['category'] == 'Discussion' %}
+                    <tr>
+                        <td>
+                            <h3 class="h5"><a href="#0">Forum Name</a></h3>
+                            <div class="fixed-table-content">
+                                <p>{{ post['content'] }} </p>
+                            </div>
+                        
+                        </td>
+                        <td>
+                            <div>5</div>
+                        </td>
+                        <td>
+                            <div>18</div>
+                        </td>
+                        <td>
+                            <div><span class="font-weight-bold"> Post subject: </span>{{ post['title'] }}</div>
+                            <div>by <a href="#0">{{ post['author_id'] }}</a></div>
+                            <div> 13 November 2023, 1:08pm</div>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
         </tbody>
     </table>
-    <h2 class="h4 text-white bg-warning mb-0 p-4 rounded-top">Forum Category</h2>
+    <h2 class="h4 text-white bg-warning mb-0 p-4 rounded-top">Questions</h2>
     <table class ="table table-striped table-bordered table-fixed">
         <thead class="thead-light">
             <tr>
@@ -110,94 +96,33 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>
-                    <h3><a href="#0">Forum Name</a></h3>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At nostrum velit perferendis, veniam est odio laborum accusamus dignissimos cum magni quasi minima! Suscipit ratione maiores explicabo</p>
-                </td>
-                <td>
-                    <div>5</div>
-                </td>
-                <td>
-                    <div>18</div>
-                </td>
-                <td>
-                    <h4 class="h6"><a href="#0">Post Name</a></h4>
-                    <div>by <a href="#0">Author name</a></div>
-                    <div> 13 November 2023, 1:08pm</div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h3><a href="#0">Forum Name</a></h3>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At nostrum velit perferendis, veniam est odio laborum accusamus dignissimos cum magni quasi minima! Suscipit ratione maiores explicabo</p>
-                </td>
-                <td>
-                    <div>5</div>
-                </td>
-                <td>
-                    <div>18</div>
-                </td>
-                <td>
-                    <h4 class="h6"><a href="#0">Post Name</a></h4>
-                    <div>by <a href="#0">Author name</a></div>
-                    <div> 13 November 2023, 1:08pm</div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h3><a href="#0">Forum Name</a></h3>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At nostrum velit perferendis, veniam est odio laborum accusamus dignissimos cum magni quasi minima! Suscipit ratione maiores explicabo</p>
-                </td>
-                <td>
-                    <div>5</div>
-                </td>
-                <td>
-                    <div>18</div>
-                </td>
-                <td>
-                    <h4 class="h6"><a href="#0">Post Name</a></h4>
-                    <div>by <a href="#0">Author name</a></div>
-                    <div> 13 November 2023, 1:08pm</div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h3><a href="#0">Forum Name</a></h3>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At nostrum velit perferendis, veniam est odio laborum accusamus dignissimos cum magni quasi minima! Suscipit ratione maiores explicabo</p>
-                </td>
-                <td>
-                    <div>5</div>
-                </td>
-                <td>
-                    <div>18</div>
-                </td>
-                <td>
-                    <h4 class="h6"><a href="#0">Post Name</a></h4>
-                    <div>by <a href="#0">Author name</a></div>
-                    <div> 13 November 2023, 1:08pm</div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h3><a href="#0">Forum Name</a></h3>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At nostrum velit perferendis, veniam est odio laborum accusamus dignissimos cum magni quasi minima! Suscipit ratione maiores explicabo</p>
-                </td>
-                <td>
-                    <div>5</div>
-                </td>
-                <td>
-                    <div>18</div>
-                </td>
-                <td>
-                    <h4 class="h6"><a href="#0">Post Name</a></h4>
-                    <div>by <a href="#0">Author name</a></div>
-                    <div> 13 November 2023, 1:08pm</div>
-                </td>
-            </tr>
+            {% for post in items %}
+                {% if post['category'] == 'Question' %}
+                    <tr>
+                        <td>
+                            <h3 class="h5"><a href="#0">Forum Name</a></h3>
+                            <div class="fixed-table-content">
+                                <p>{{ post['content'] }} </p>
+                            </div>
+                        
+                        </td>
+                        <td>
+                            <div>5</div>
+                        </td>
+                        <td>
+                            <div>18</div>
+                        </td>
+                        <td>
+                            <div><span class="font-weight-bold"> Post subject: </span>{{ post['title'] }}</div>
+                            <div>by <a href="#0">{{ post['author_id'] }}</a></div>
+                            <div> 13 November 2023, 1:08pm</div>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
         </tbody>
     </table>
-    <h2 class="h4 text-white bg-danger mb-0 p-4 rounded-top">Forum Category</h2>
+    <h2 class="h4 text-white bg-danger mb-0 p-4 rounded-top">Interview Help</h2>
     <table class ="table table-striped table-bordered table-fixed">
         <thead class="thead-light"> 
             <tr>
@@ -208,91 +133,30 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>
-                    <h3><a href="#0">Forum Name</a></h3>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At nostrum velit perferendis, veniam est odio laborum accusamus dignissimos cum magni quasi minima! Suscipit ratione maiores explicabo</p>
-                </td>
-                <td>
-                    <div>5</div>
-                </td>
-                <td>
-                    <div>18</div>
-                </td>
-                <td>
-                    <h4 class="h6"><a href="#0">Post Name</a></h4>
-                    <div>by <a href="#0">Author name</a></div>
-                    <div> 13 November 2023, 1:08pm</div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h3><a href="#0">Forum Name</a></h3>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At nostrum velit perferendis, veniam est odio laborum accusamus dignissimos cum magni quasi minima! Suscipit ratione maiores explicabo</p>
-                </td>
-                <td>
-                    <div>5</div>
-                </td>
-                <td>
-                    <div>18</div>
-                </td>
-                <td>
-                    <h4 class="h6"><a href="#0">Post Name</a></h4>
-                    <div>by <a href="#0">Author name</a></div>
-                    <div> 13 November 2023, 1:08pm</div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h3><a href="#0">Forum Name</a></h3>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At nostrum velit perferendis, veniam est odio laborum accusamus dignissimos cum magni quasi minima! Suscipit ratione maiores explicabo</p>
-                </td>
-                <td>
-                    <div>5</div>
-                </td>
-                <td>
-                    <div>18</div>
-                </td>
-                <td>
-                    <h4 class="h6"><a href="#0">Post Name</a></h4>
-                    <div>by <a href="#0">Author name</a></div>
-                    <div> 13 November 2023, 1:08pm</div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h3><a href="#0">Forum Name</a></h3>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At nostrum velit perferendis, veniam est odio laborum accusamus dignissimos cum magni quasi minima! Suscipit ratione maiores explicabo</p>
-                </td>
-                <td>
-                    <div>5</div>
-                </td>
-                <td>
-                    <div>18</div>
-                </td>
-                <td>
-                    <h4 class="h6"><a href="#0">Post Name</a></h4>
-                    <div>by <a href="#0">Author name</a></div>
-                    <div> 13 November 2023, 1:08pm</div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h3><a href="#0">Forum Name</a></h3>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At nostrum velit perferendis, veniam est odio laborum accusamus dignissimos cum magni quasi minima! Suscipit ratione maiores explicabo</p>
-                </td>
-                <td>
-                    <div>5</div>
-                </td>
-                <td>
-                    <div>18</div>
-                </td>
-                <td>
-                    <h4 class="h6"><a href="#0">Post Name</a></h4>
-                    <div>by <a href="#0">Author name</a></div>
-                    <div> 13 November 2023, 1:08pm</div>
-                </td>
-            </tr>
+            {% for post in items %}
+                {% if post['category'] == 'Interview Help' %}
+                    <tr>
+                        <td>
+                            <h3 class="h5"><a href="#0">Forum Name</a></h3>
+                            <div class="fixed-table-content">
+                                <p>{{ post['content'] }} </p>
+                            </div>
+                        
+                        </td>
+                        <td>
+                            <div>5</div>
+                        </td>
+                        <td>
+                            <div>18</div>
+                        </td>
+                        <td>
+                            <div><span class="font-weight-bold"> Post subject: </span>{{ post['title'] }}</div>
+                            <div>by <a href="#0">{{ post['author_id'] }}</a></div>
+                            <div> 13 November 2023, 1:08pm</div>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
         </tbody>
     </table>
 </div>
