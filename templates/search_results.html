@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Forum - Search Results</title>
+
+    <style type="text/css">
+        .author-col {
+            min-width: 12em;
+        }
+
+        .post-col {
+            min-width: 20em;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    {% include 'header.html'%}   
+
+    <div class="container my-3">
+        <nav class="breadcrumb">
+            <div class="container mt-4">
+                <a href="index.html" class="breadcrumb-item">Board Index</a>
+                <a href="overview-forum-category.html" class="breadcrumb-item">Forum Category</a>
+                <a href="overview-topics.html" class="breadcrumb-item">Forum Name</a>
+                <span class="breadcrumb-item active">Search Results</span>
+            </div>
+        </nav>
+
+        <div class="row">
+            <div class="col-12">
+
+                {% if results %}
+                {% for result in results %}
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h2 class="h4 mb-0">Forum Name</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3 author-col">
+                                <div>by <a href="#0">{{ result.author }}</a></div>
+                                <div><span class="font-weight-bold">Joined</span><br>{{ result.joined }}</div>
+                                <div><span class="font-weight-bold">Posts</span><br>{{ result.posts }}</div>
+                            </div>
+                            <div class="col-md-9 post-col d-lg-flex justify-content-lg-between">
+                                <div><span class="font-weight-bold">Post subject:</span> {{ result.title }}</div>
+                                <div><span class="font-weight-bold">Posted:</span> {{ result.posted }}</div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            {{ result.content }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <p>No results found.</p>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="small bg-dark text-white">
+        <div class="container"></div>
+        <ul class="list-inline">
+            <li class="list-inline-item">&copy; 2023 Woodward Beyond</li>
+            <li class="list-inline-item">All rights reserved.</li>
+            <li class="list-inline-item"><a href="#0">Terms of use and privacy policy</a>.</li>
+        </ul>
+    </footer>
+
+</body>
+
+</html>

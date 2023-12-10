@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login - Woodward Beyond</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style.css') }}"
+/>
+</head>
+
+<body>
+
+           {% include 'header.html'%}
+    <div id="abc" class="abc">
+        <div class="centered">
+            <h1 class="title">Woodward Beyond</h1>
+            <p class="title-sub ">
+                <button onclick="window.location.href='login.html'" type="welcome" class="ww-btn btn btn-primary">Join the Class</button>
+            </p>
+        </div>
+    </div>
+
+    <footer class="small bg-dark text-white">
+        <div class="container">
+            <ul class="list-inline">
+                <li class="list-inline-item">&copy; 2023 Woodward Beyond</li>
+                <li class="list-inline-item">All rights reserved.</li>
+                <li class="list-inline-item"><a href="#0">Terms of use and privacy policy</a>.</li>
+            </ul>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and jQuery (make sure to include them at the end of the body) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -38,8 +38,8 @@
                 <a href="new-post.html" class="navbar-brand">New Post</a>
             </li>
             <li>
-                <form class="form-inline">
-                    <input type="text" class="form-control mr-3 mb-2 mb-sm-0" placeholder="Search">
+                <form action="{{ url_for('search') }}" method="GET" class="search-form">
+                    <input type="text" name="query" class="form-control mr-3 mb-2 mb-sm-0" placeholder="Search">
                     <button type="submit" class="ww-btn btn btn-primary">Search</button>
                 </form>
             </li>
@@ -51,7 +51,6 @@
         </div>
     </nav>
 </header>
-
 <!-- Code for Responsive Top Navigation -->
 <script>
     const hamburger = document.querySelector(".hamburger");
