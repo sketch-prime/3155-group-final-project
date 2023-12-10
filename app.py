@@ -70,11 +70,14 @@ def get_post(id):
 
     # Fetch posts from the database
     cursor.execute('''
-        SELECT posts.id, posts.title, posts.content, posts.category, posts.author_id, users.username, posts.timestamp
+        SELECT posts.id, posts.title, posts.content, posts.category, posts.author_id, users.username,
+               COUNT(replies.id) AS reply_count
         FROM posts
         JOIN users ON posts.author_id = users.id
+        LEFT JOIN replies ON posts.id = replies.post_id
         WHERE posts.id = ?
-    ''', (id,))    
+        GROUP BY posts.id, users.id
+    ''', (id,))
     post = cursor.fetchone()
 
     conn.close()
