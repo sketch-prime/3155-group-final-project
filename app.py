@@ -1,8 +1,7 @@
 import os
 import sqlite3, secrets
 from flask import Flask, render_template, request, redirect, url_for, session
-from distutils.log import debug 
-from fileinput import filename 
+from werkzeug.utils import secure_filename
 from datetime import datetime as dt
 
 current_user_id = -1
@@ -174,26 +173,49 @@ def profile():
         date = con.execute("SELECT * FROM users WHERE date = ?", (user_id,)).fetchone()
         con.close()
 
-        return render_template('profile.html', user=user, date=date)
+        if os.path.exists(fpath + str(user_id) + ".png"):
+            img = fpath + str(user_id) + ".png"
+        else:
+            img = fpath + "noprofile.png"
+
+        return render_template('profile.html', user=user, date=date, img=img)
     else:
         return redirect(url_for('login'))
 
-    
-@app.route('/success', methods = ['GET', 'POST'])   
-def success():   
-    if request.method == 'POST':   
-        f = request.files['file'] 
-        f.save(os.path.join(app.instance_path, f.filename))   
-        fpath = "/instance/" + f.filename
-        print(fpath)
-        testuser = 6
-        print(testuser)
+
+
+upload_folder = os.path.join('static', 'uploads')
+fpath = "static/uploads/"
+ 
+app.config['UPLOAD'] = upload_folder
+ 
+@app.route('/', methods=['GET', 'POST'])
+def upload_file():
+    user_id = session.get('user_id', None)
+    print(user_id)
+    if request.method == 'POST':
+        file = request.files['img']
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD'], filename))
+
+        if os.path.exists(fpath + str(user_id) + ".png"):
+            os.remove(fpath + str(user_id) + ".png")
+
+        os.rename(fpath + filename, fpath + str(user_id) + ".png")
+
+        img = fpath + str(user_id) + ".png"
+
+
+
         con = get_db_connection()
-        users = con.execute("SELECT * FROM users").fetchall()
-        con.execute("UPDATE users SET resume = ? WHERE id = ?", (fpath, testuser))
+        user = con.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
+        date = con.execute("SELECT * FROM users WHERE date = ?", (user_id,)).fetchone()
         con.close()
 
-        return render_template("Acknowledgement.html", name = f.filename)   
+
+        return render_template('profile.html', user=user, date=date,img=img)
+    return render_template('profile.html')
+
 
 @app.route('/search', methods=['GET'])
 def search():
