@@ -21,8 +21,12 @@ def create_table():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS posts (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            author_id INTEGER,
             title TEXT NOT NULL,
-            content TEXT NOT NULL
+            content TEXT NOT NULL,
+            category TEXT NOT NULL,
+            posted_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (author_id) REFERENCES users(id)
         )
     ''')
     conn.commit()
@@ -30,15 +34,29 @@ def create_table():
 
 create_table()
 
+def get_posts():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Fetch posts from the database
+    cursor.execute('SELECT id, title, content, category FROM posts')
+    posts = cursor.fetchall()
+
+    conn.close()
+    return posts
+
 @app.route('/index.html')
 def index():
-    session['signed_up'] = False
-    return render_template('index.html')
+
+    posts = get_posts()
+    return render_template('index.html', items=posts)
 
 @app.route('/')
 def root():
     session['signed_up'] = False
-    return render_template('index.html')
+    posts = get_posts()
+    return render_template('index.html', items=posts)
+
 
 @app.route('/overview-topics.html')
 def overviewtopics():
@@ -47,16 +65,20 @@ def overviewtopics():
 @app.route('/new-post.html', methods=['GET', 'POST'])
 def create_post():
     if request.method == 'POST':
-        print(f"Form Data: {request.form}")
+        # Retrieve the currently logged-in user's ID
+        author_id = currentuserid
+
         title = request.form['title']
         content = request.form['content']
-
-        print(title)
-        print(content)
+        category = request.form['category']
 
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO posts (title, content) VALUES (?, ?)", (title, content))
+
+        # Insert post with the author's ID
+        cursor.execute("INSERT INTO posts (author_id, title, content, category) VALUES (?, ?, ?, ?)",
+                       (author_id, title, content, category))
+
         conn.commit()
         conn.close()
 

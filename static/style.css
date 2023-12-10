@@ -178,3 +178,9 @@ ww-green {
         font-size: 16px;
         font-family: 'JetBrains Mono', monospace;
       }
+
+      .fixed-size-content {
+        max-height: 100px; 
+        overflow-y: auto;
+        padding: auto; 
+      }
