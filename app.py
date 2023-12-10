@@ -66,7 +66,7 @@ def overviewtopics():
 def create_post():
     if request.method == 'POST':
         # Retrieve the currently logged-in user's ID
-        author_id = currentuserid
+        author_id = current_user_id
 
         title = request.form['title']
         content = request.form['content']
