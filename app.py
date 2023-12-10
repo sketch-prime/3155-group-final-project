@@ -20,6 +20,7 @@ def get_db_connection():
 def create_table():
     conn = get_db_connection()
     cursor = conn.cursor()
+
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS posts (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -27,7 +28,7 @@ def create_table():
             title TEXT NOT NULL,
             content TEXT NOT NULL,
             category TEXT NOT NULL,
-            posted_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (author_id) REFERENCES users(id)
         )
     ''')
@@ -54,7 +55,7 @@ def get_posts():
 
     # Fetch posts from the database
     cursor.execute('''
-        SELECT posts.id, posts.title, posts.content, posts.category, posts.author_id, users.username
+        SELECT posts.id, posts.title, posts.content, posts.category, posts.author_id, users.username, posts.timestamp
         FROM posts
         JOIN users ON posts.author_id = users.id
     ''')    
@@ -69,7 +70,7 @@ def get_post(id):
 
     # Fetch posts from the database
     cursor.execute('''
-        SELECT posts.id, posts.title, posts.content, posts.category, posts.author_id, users.username
+        SELECT posts.id, posts.title, posts.content, posts.category, posts.author_id, users.username, posts.timestamp
         FROM posts
         JOIN users ON posts.author_id = users.id
         WHERE posts.id = ?
