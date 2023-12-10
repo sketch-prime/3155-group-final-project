@@ -12,63 +12,9 @@
 
 <body>
 
-
     {% include 'header.html'%}
-    <section class="background-section">
-        
-        <br>
-        <!-- Floating on Left will be Image -->
-        <div class="p-row">
-            <div class="columnCenterL"> <!-- Main Image -->
-                <div class="cardalt">
-                    <img src="user-icon.png" alt="Profile Picture" class="img-fluid rounded-circle" style="max-width: 150px;">
-                </div>
-                <br>
-                <br>
-                <div class="cardalt">
-                    <form action = "/success" method = "post" enctype="multipart/form-data">   
-                        <input type="file" name="file" />   
-                        <input type = "submit" value="Upload">   
-                    </form>   
-                </div>
-            </div>
-            
-            <div class="columnCenterR "> 
-                <div class="p-row">
-                    <div class="cardalt">
-                        <h2 class="message-h2"> Username: {{ user.username }}</h2>
-                    </div>
-                    <br>
-                    <div class="cardalt">
-                        <p class="message-paragraph" style="font-size: 104%;">
-                            User description or other information can be added here.
-                        </p>
-                    </div>
-                    <div class="p-row" style="padding-top: 2%;">
-                        <div class="columnCenterR">
-                            <div class="cardalt" style="font-size: 100%;" id="date">
-                                <span class="font-weight-bold">Joined:</span> {{user.date}}
-                            </div>
-                        </div>
-                        <div class="columnCenterR">
-                            <div class="cardalt" style="font-size: 100%;" id="post">
-                                <span class="font-weight-bold">Posts:</span> 0
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </section>
-
-
-
-
-<!--
-    <section>
     <div class="container my-3">
-        <div class="p-row">
+        <div class="row">
             <div class="col-12">
                 <h2 class="h4 text-white bg-info mb-0 p-4 rounded-top">User Profile</h2>
                 <div class="text-center mb-4">
@@ -101,7 +47,6 @@
             </div>
         </div>
     </div>
-    </section>  -->
 
     <footer class="small bg-dark text-white">
         <div class="container">
