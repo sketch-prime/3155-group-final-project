@@ -231,12 +231,31 @@ def success():
 
         return render_template("Acknowledgement.html", name = f.filename)   
 
+@app.route('/search', methods=['GET'])
+def search():
+    query = request.args.get('query')
+
 
 @app.route('/view-post/<int:id>')
 def view_post(id):
     post = get_post(id)
     print(id)
     return render_template('view-post.html', post=post)
+
+    if query:
+        con = get_db_connection()
+        cursor = con.cursor()
+
+        # Example query: Find posts containing the search query in title or content
+        cursor.execute("SELECT * FROM posts WHERE title LIKE ? OR content LIKE ?", ('%' + query + '%', '%' + query + '%'))
+
+        search_results = cursor.fetchall()
+
+        con.close()
+
+        return render_template('search_results.html', query=query, results=search_results)
+    else:
+        return render_template('search_results.html', query=None, results=None)
 
 
 if __name__ == '__main__':
