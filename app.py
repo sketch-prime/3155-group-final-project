@@ -1,10 +1,13 @@
 import sqlite3, secrets
+import sqlite3, secrets
 from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import datetime as dt
 
 current_user_id = -1
 
 app = Flask(__name__)
+secret_key = secrets.token_urlsafe(32)
+app.secret_key = secret_key 
 secret_key = secrets.token_urlsafe(32)
 app.secret_key = secret_key 
 
@@ -167,6 +170,25 @@ def profile():
         return render_template('profile.html', user=user, date=date)
     else:
         return redirect(url_for('login'))
+
+    
+@app.route('/success', methods = ['GET', 'POST'])   
+def success():   
+    if request.method == 'POST':   
+        f = request.files['file'] 
+        f.save(os.path.join(app.instance_path, f.filename))   
+        fpath = "/instance/" + f.filename
+        print(fpath)
+        testuser = 6
+        print(testuser)
+        con = get_db_connection()
+        users = con.execute("SELECT * FROM users").fetchall()
+        con.execute("UPDATE users SET resume = ? WHERE id = ?", (fpath, testuser))
+        con.close()
+
+        return render_template("Acknowledgement.html", name = f.filename)   
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
