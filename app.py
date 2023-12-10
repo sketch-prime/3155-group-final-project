@@ -12,10 +12,6 @@ current_user_id = -1
 app = Flask(__name__)
 secret_key = secrets.token_urlsafe(32)
 app.secret_key = secret_key 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 
 def get_db_connection():
     conn = sqlite3.connect('database/wb.db')
