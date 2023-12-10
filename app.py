@@ -32,6 +32,17 @@ def create_table():
             FOREIGN KEY (author_id) REFERENCES users(id)
         )
     ''')
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS replies (
+            id INTEGER PRIMARY KEY,
+            content TEXT,
+            post_id INTEGER,
+            author_id INTEGER,
+            FOREIGN KEY (post_id) REFERENCES posts (id),
+            FOREIGN KEY (author_id) REFERENCES users (id)
+        )
+    ''')
+
     conn.commit()
     conn.close()
 
@@ -52,6 +63,38 @@ def get_posts():
 
     conn.close()
     return posts
+
+def get_post(id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Fetch posts from the database
+    cursor.execute('''
+        SELECT posts.id, posts.title, posts.content, posts.category, posts.author_id, users.username
+        FROM posts
+        JOIN users ON posts.author_id = users.id
+        WHERE posts.id = ?
+    ''', (id,))    
+    post = cursor.fetchone()
+
+    conn.close()
+    return post
+
+def get_replies_for_post(id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Fetch replies from the database for a specific post
+    cursor.execute('''
+        SELECT replies.content, replies.author_id, replies.timestamp
+        FROM replies
+        WHERE post_id = ?
+    ''', (id,))
+    
+    replies = cursor.fetchall()
+
+    conn.close()
+    return replies
 
 @app.route('/index.html')
 def index():
@@ -213,6 +256,36 @@ def search():
         return render_template('search_results.html', query=query, results=search_results)
     else:
         return render_template('search_results.html', query=None, results=None)
+
+@app.route('/view-post/<int:id>')
+def view_post(id):
+    post = get_post(id)
+    replies = get_replies_for_post(id)
+
+    return render_template('view-post.html', post=post, replies=replies)
+
+@app.route('/submit-reply/<int:post_id>', methods=['POST'])
+def submit_reply(post_id):
+    content = request.form.get('replyContent')
+    author_id = current_user_id  # Replace with your function to get the current user ID
+
+    print(f"Post ID: {post_id}, Content: {content}, Author ID: {author_id}")
+
+    # Save the reply to the database
+    save_reply(post_id, content, author_id)
+
+    return redirect(url_for('view_post', id=post_id))
+
+def save_reply(post_id, content, author_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+
+    # Insert the reply into the database
+    cursor.execute('INSERT INTO replies (content, post_id, author_id) VALUES (?, ?, ?)', (content, post_id, author_id))
+
+    conn.commit()
+    conn.close()
 
 if __name__ == '__main__':
     app.run(debug=True)

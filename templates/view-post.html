@@ -1,64 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ post['title'] }}</title>
-    <!-- Include Bootstrap CSS for styling (optional) -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- Add your custom styles here -->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Forum - Post</title>
 
-        .container {
-            margin-top: 50px;
+    <style type="text/css">
+        .author-col {
+            min-width: 12em;
         }
-
-        .post-title {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #343a40;
-        }
-
-        .post-info {
-            margin-bottom: 20px;
-        }
-
-        .post-content {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            color: #495057;
+        
+        .post-col{
+            min-width: 20em;
         }
     </style>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 
 
 <body>
-{% include 'header.html'%}       
 
+    {% include 'header.html'%}   
+    <div class="container my-3">
+    <nav class="breadcrumb">
+        <div class="container mt-4">
+        <a href="index.html" class="breadcrumb-item">Board Index</a>
+        <a href="overview-forum-category.html" class="breadcrumb-item">Forum Category</a>
+        <a href="overview-topics.html" class="breadcrumb-item">Forum Name</a>
+        <span class="breadcrumb-item active">Forum post</span>
+        </div>
+    </nav>
+    <div class="row">
+        <div class="col-12">
+    <h2 class="h4 text-white bg-info mb-0 p-4 rounded-top">{{ post['category'] }}</h2>
+    <table class ="table table-striped table-bordered table-responsive-lg">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">{{ post['category'] }}</th>
+                <th scope="col">Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="author-col">
+                    <div>by <a href="#0">{{ post['username'] }}</a></div>
+                </td>
+                <td class="post-col d-lg-flex justify-content-lg-between">
+                    <div><span class="font-weight-bold"> {{ post['title'] }} </span> </div>
+                    <div> <span class="font-weight-bold">Posted:</span> 03 Nov 2023, 4:36 PM </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div><span class="font-weight-bold"> Joined </span> <br>03 Nov 2023, 4:36 PM  </div>
+                    <div> <span class="font-weight-bold">Posts:</span><br> 88</div>
+                </td>
+                <td>
+                    <p>{{ post['content'] }}</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
+    {% for reply in replies %}
+    <div class="container">
+        <table class="table table-striped table-bordered table-responsive-lg">
+            <tbody>
+                <tr>
+                    <td class="author-col">
+                        <div>Reply from <a href="#0">{{ reply['username'] }}</a></div>
+                    </td>
+                    <td class="post-col d-lg-flex justify-content-lg-between">
+                        <div><span class="font-weight-bold">Posted:</span> 03 Nov 2023, 4:36 PM</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div><span class="font-weight-bold">Joined</span><br>03 Nov 2023, 4:36 PM</div>
+                        <div><span class="font-weight-bold">Posts:</span><br>88</div>
+                    </td>
+                    <td>
+                        <p>{{ reply['content'] }}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+<div class="mb-3 clearfix">
+<nav aria-label="Navigate post pages" class="float-lg-right">
+    <ul class="pagination pagination-sm mb-lg-0">
+        <li class="page-item"><a href="#0" class="page-link">1 <span class="sr-only">(current)</span></a></li>
+        <li class="page-item"><a href="#0" class="page-link">2</a></li>
+        <li class="page-item"><a href="#0" class="page-link">3</a></li>
+        <li class="page-item"><a href="#0" class="page-link">4</a></li>
+        <li class="page-item"><a href="#0" class="page-link">&hellip; 22</a></li>
+        <li class="page-item"><a href="#0" class="page-link">Next</a></li>
+    </ul>
 
+</nav>
 <div class="container">
-    <div class="post-title">{{ post['title'] }}</div>
-
-    <div class="post-info">
-        <p>Category: {{ post['category'] }}</p>
-        <p>Author: {{ post['username'] }}</p>
-        <p>Posted on: {{ post['post_date'] }}</p>
-    </div>
-
-    <div class="post-content">
-        {{ post['content'] }}
-    </div>
+    <form method="post" action="{{ url_for('submit_reply', post_id=post['id']) }}" class="mb-3">
+        <div class="form-group">
+            <label for="replyContent">Reply to this post</label>
+            <textarea class="form-control" id="replyContent" name="replyContent" rows="10" placeholder="Write your comment here."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Reply</button>
+        <button type="reset" class="btn btn-danger">Reset</button>
+    </form>
 </div>
-
-<!-- Include Bootstrap JS and Popper.js (optional) -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+ <footer class="small bg-dark text-white">
+    <div class="container"></div>
+    <ul class="list-inline">
+        <li class="list-inline-item">&copy; 2023 Woodward Beyond</li>
+        <li class="list-inline-item">All rights reserved.</li>
+        <li class="list-inline-item"><a href="#0">Terms of use and privacy policy</a>.</li>
+    </ul>
+</div>
+</footer>
+    
 
 </body>
+
 </html>
+
