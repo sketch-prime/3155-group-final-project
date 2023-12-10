@@ -15,7 +15,7 @@ ww-green {
     }
 
     html {
-        font-size: 62.5%;
+        font-size: 75%;
         font-family: 'Roboto', sans-serif;
     }
 
@@ -177,4 +177,10 @@ ww-green {
         display: inline-block;
         font-size: 16px;
         font-family: 'JetBrains Mono', monospace;
+      }
+
+      .fixed-size-content {
+        max-height: 100px; 
+        overflow-y: auto;
+        padding: auto; 
       }
