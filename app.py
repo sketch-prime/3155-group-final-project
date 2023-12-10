@@ -42,7 +42,11 @@ def get_posts():
     cursor = conn.cursor()
 
     # Fetch posts from the database
-    cursor.execute('SELECT id, title, content, category FROM posts')
+    cursor.execute('''
+        SELECT posts.id, posts.title, posts.content, posts.category, posts.author_id, users.username
+        FROM posts
+        JOIN users ON posts.author_id = users.id
+    ''')    
     posts = cursor.fetchall()
 
     conn.close()
