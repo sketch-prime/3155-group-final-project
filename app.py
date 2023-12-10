@@ -12,7 +12,10 @@ current_user_id = -1
 app = Flask(__name__)
 secret_key = secrets.token_urlsafe(32)
 app.secret_key = secret_key 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
 def get_db_connection():
     conn = sqlite3.connect('database/wb.db')
@@ -81,9 +84,13 @@ def get_post(id):
 
 @app.route('/index.html')
 def index():
+
     session['signed_up'] = False
     posts = get_posts()
-    return render_template('index.html', items=posts)
+    u=''
+    if 'username' in session.keys():
+        u=session['username']
+    return render_template('index.html', items=posts, username=u)
 
 @app.route('/')
 def root():
@@ -115,16 +122,23 @@ def create_post():
         conn.commit()
         conn.close()
 
-    return render_template('new-post.html')
+    return render_template('post.html')
 
 @app.route('/overview-forum-category.html')
 def overviewforumcategory():
     return render_template('overview-forum-category.html')
 
 
-@app.route('/post.html')
-def post():
-    return render_template('post.html')
+@app.route('/post.html/<int:pid>')
+def post(pid=None):
+    conn = get_db_connection()
+    cursor=conn.cursor()
+    post = cursor.execute(f"SELECT * FROM posts WHERE id={pid}").fetchone()
+    conn.commit()
+    return render_template('post.html', post=post)
+
+pid = '/pid'
+app.add_url_rule(pid, 'post', post)
 
 @app.route('/sign-up.html')
 def signup():
@@ -178,7 +192,7 @@ def loginpost():
         # Set the user ID in the session upon successful login
         session['user_id'] = current_user_id
         session['signed_up'] = True
-
+        session['username'] = username
         return redirect(url_for('profile'))
     else:
         session['signed_up'] = False
@@ -186,8 +200,8 @@ def loginpost():
 
 @app.route('/logout')
 def logout():
-    # Remove the user ID from the session upon logout
-    session.pop('user_id', None)
+    # Remove the user ID and any other session variables upon logout
+    session.clear()
     return redirect(url_for('login'))
 
 @app.route('/profile.html')
