@@ -1,6 +1,5 @@
 import os
 import sqlite3, secrets
-import sqlite3, secrets
 from flask import Flask, render_template, request, redirect, url_for, session
 from distutils.log import debug 
 from fileinput import filename 
