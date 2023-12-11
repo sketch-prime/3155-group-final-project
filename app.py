@@ -102,9 +102,19 @@ def get_replies_for_post(id):
 
 @app.route('/index.html')
 def index():
+    conn=get_db_connection()
+    cursor=conn.cursor()
+    totalusers=len(cursor.execute('SELECT * FROM users').fetchall())
+
     session['signed_up'] = False
     posts = get_posts()
-    return render_template('index.html', items=posts)
+    u=''
+    if 'username' in session.keys():
+        u=session['username']
+    return render_template('index.html', items=posts, username=u, totalusers=totalusers)
+   
+   
+
 
 @app.route('/')
 def root():
@@ -200,6 +210,7 @@ def loginpost():
         # Set the user ID in the session upon successful login
         session['user_id'] = current_user_id
         session['signed_up'] = True
+        session['username'] = username
 
         return redirect(url_for('index'))
     else:
@@ -210,6 +221,7 @@ def loginpost():
 def logout():
     # Remove the user ID from the session upon logout
     session.pop('user_id', None)
+    session.pop('username', None)
     return redirect(url_for('login'))
 
 @app.route('/profile.html')
@@ -237,7 +249,6 @@ upload_folder = os.path.join('static', 'uploads')
 fpath = "static/uploads/"
  
 app.config['UPLOAD'] = upload_folder
- 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     user_id = session.get('user_id', None)

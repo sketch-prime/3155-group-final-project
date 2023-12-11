@@ -145,13 +145,15 @@
             <div class="card-body">
                 <h2 class="h4 card-title">Members online</h2>
                 <ul class="list-unstyled">
+                    {%if username is defined%}
                     <li><a href="#0">{{username}}</a></li>
+                    {%endif%}
                 </ul>
             </div>
             <div class="card-footer">
                 <dl class="row">
-                    <dt class="col-8">Total:</dt>
-                    <dd class="col-4">10</dd>
+                    <dt class="col-8">Total Users</dt>
+                    <dd class="col-4">{{totalusers}}</dd>
                 </dl>
                 <dl class="row">
                     <dt class="col-8">Members:</dt>
