@@ -30,11 +30,7 @@
                         <input name="img" type="file"/>
                         <input type="submit" value ="Upload">
                     </form>  
-                    {% if session.user_id is defined %}
-                    <form action="{{ url_for('logout') }}" method="get">
-                        <button type="submit" class="btn btn-danger">Logout</button>
-                    </form>
-                {% endif %}
+                    
                 </div>
             </div>
             
@@ -42,6 +38,11 @@
                 <div class="p-row">
                     <div class="cardalt">
                         <h2 class="message-h2"> Username: {{ user.username }}</h2>
+                        {% if session.user_id is defined %}
+                    <form action="{{ url_for('logout') }}" method="get">
+                        <button type="submit" class="btn btn-danger">Logout</button>
+                    </form>
+                {% endif %}
                     </div>
                     <br>
                     <div class="cardalt">
