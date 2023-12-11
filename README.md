@@ -1,9 +1,8 @@
-run the following in the terminal:
+Requirements:
+Python
+Flask (pip install flask)
 
-(ensure python is installed)
+How to run:
+Navigate to install directory in terminal (command prompt or git bash) and run app.py (python app.py)
 
-# pip install jinja2
-# pip install flask
-# python -m app run
-
-this should run the app in a browser window
+open a web browser and go to 127.0.0.1:5000 (or localhost:5000)
